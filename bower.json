@@ -1,0 +1,13 @@
+{
+  "name": "co-reading",
+  "version": "0.0.0",
+  "authors": [
+    "wendy <wendycaner@gmail.com>"
+  ],
+  "description": "co-reading",
+  "license": "MIT",
+  "private": true,
+   "dependencies": {
+     "foundation": "~5.4.7"
+  }
+}
