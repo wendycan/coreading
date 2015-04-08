@@ -14,3 +14,7 @@
  *= require vendor
  *= require_self
  */
+
+.top-bar img {
+  width: 35px;
+}
