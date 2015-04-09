@@ -11,7 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408124624) do
+ActiveRecord::Schema.define(version: 20150409135224) do
+
+  create_table "articles", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.string   "ty"
+    t.integer  "si"
+    t.integer  "ei"
+    t.text     "sm"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "title"
+    t.text     "desc"
+    t.integer  "count"
+    t.integer  "admin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -30,5 +57,13 @@ ActiveRecord::Schema.define(version: 20150408124624) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_groups", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
+  add_index "users_groups", ["group_id"], name: "index_users_groups_on_group_id"
+  add_index "users_groups", ["user_id"], name: "index_users_groups_on_user_id"
 
 end

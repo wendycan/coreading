@@ -7,8 +7,14 @@
   %section.top-bar-section
     %ul.right
       %li
-        = link_to '#' do
-          = "文章"
+        - if user_signed_in?
+          %li
+            %a{:href => "#"} 批注
+          %li
+            %a{:href => "#"} 小组
+        - else
+          = link_to '#' do
+            = "文章"
       %li.has-dropdown
         = link_to new_user_session_path do
           - if user_signed_in?
@@ -17,10 +23,6 @@
             登录
         %ul.dropdown
           - if user_signed_in?
-            %li
-              %a{:href => "#"} 小组
-            %li
-              %a{:href => "#"} 批注
             %li
               %a{:href => "#"} 设置
             %li
