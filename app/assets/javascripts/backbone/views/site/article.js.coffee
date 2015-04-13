@@ -1,16 +1,12 @@
-Coreading.Views.Blogs ||= {}
+Coreading.Views.Articles ||= {}
 
-class Coreading.Views.Blogs.BlogView extends Backbone.View
-  el: $('#main-content')
+class Coreading.Views.Articles.ArticleView extends Backbone.View
+  el: '#main-content'
 
   initialize: (opts)->
-    @blog = new Coreading.Models.Blog(opts)
-    @converter = new Showdown.converter()
-    @renderBlog()
+    @article = new Coreading.Models.Article(opts)
+    @renderArticle()
 
-  renderBlog: ->
-    blog = @blog.toJSON()
-    if blog.language == 'markdown'
-      blog.body = @converter.makeHtml(blog.body)
-    blog.date = jQuery.timeago(blog.created_at)
-    @$el.html(_.template($('#t-blog-show').html())(blog: blog)) 
+  renderArticle: =>
+    article = @article.toJSON()
+    @$el.html(_.template($('#t-article-show').html())(article: article)) 

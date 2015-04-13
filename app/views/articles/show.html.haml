@@ -1,0 +1,16 @@
+.row
+  .large-12.columns
+    #main-content.wrap
+
+%script{type: 'text/template', id: 't-article-show'}
+  %h2 {{= article.title}}
+  %p {{= article.body }}
+
+- article_json = render template: "articles/show", formats: [:json], handlers: [:jbuilder]
+
+= content_for :js_ext do
+  :javascript
+    $(document).ready(function () {
+      var articles_view = new Coreading.Views.Articles.ArticleView(#{article_json});
+    });
+    $('.articles-btn').addClass('active');
