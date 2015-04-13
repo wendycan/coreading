@@ -1,7 +1,20 @@
 .row
   .large-12.columns
-    - @articles.each do |article|
-      %h2= article.title
-      = article.body.html_safe
+    #main-content.wrap
+      #y-articles
 
     = will_paginate @articles
+
+%script{type: 'text/template', id: 't-article'}
+  %h4 
+    %a{:href => "/articles/{{= article.id }}"}{{= article.title}}
+  %p {{= article.body }}
+
+- articles_json = render template: "articles/index", formats: [:json], handlers: [:jbuilder]
+
+= content_for :js_ext do
+  :javascript
+    $(document).ready(function () {
+      var articles_view = new Coreading.Views.Articles.ArticlesView(#{articles_json});
+    });
+    $('.articles-btn').addClass('active');
