@@ -1,0 +1,7 @@
+.row
+  .large-12.columns
+    - @articles.each do |article|
+      %h2= article.title
+      = article.body.html_safe
+
+    = will_paginate @articles
