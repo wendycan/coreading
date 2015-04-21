@@ -1,1 +1,24 @@
 %h4 About
+
+-# #pageContainer.pdfPage
+#viewerContainer
+  #viewer.pdfViewer
+
+:javascript
+  var DEFAULT_URL = '/demo2.pdf';
+
+  var container = document.getElementById('viewerContainer');
+  var pdfViewer = new PDFJS.PDFViewer({
+    container: container
+  });
+
+  container.addEventListener('pagesinit', function () {
+    // we can use pdfViewer now, e.g. let's change default scale.
+    pdfViewer.currentScaleValue = 'page-width';
+  });
+
+  // Loading document.
+  PDFJS.getDocument(DEFAULT_URL).then(function (pdfDocument) {
+    // Document loaded, specifying document for the viewer.
+    pdfViewer.setDocument(pdfDocument);
+  });

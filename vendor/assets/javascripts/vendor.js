@@ -8,3 +8,5 @@
 //= require pdfjs-dist/build/pdf
 //= require pdfjs-dist/build/pdf.worker
 //= require pdfjs-dist/build/pdf.combined
+//= require pdf_viewer
+//= require compatibility
