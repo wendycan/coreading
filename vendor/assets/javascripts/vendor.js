@@ -4,3 +4,7 @@
 //= require underscore/underscore
 //= require backbone/backbone
 //= require alertify/alertify
+//= require annotator-full.min
+//= require pdfjs-dist/build/pdf
+//= require pdfjs-dist/build/pdf.worker
+//= require pdfjs-dist/build/pdf.combined
