@@ -1,7 +1,9 @@
 %h4 About
 
-#viewerContainer
-  #viewer.pdfViewer
+.content
+  #viewerContainer
+    #viewer.pdfViewer
+  #annotator-wedget
 
 :javascript
   var DEFAULT_URL = '/demo2.pdf';
@@ -21,4 +23,5 @@
     // Document loaded, specifying document for the viewer.
     pdfViewer.setDocument(pdfDocument);
   });
-  $(document.body).annotator()
+  Annotator.textSelector($('#viewerContainer'));
+  Annotator.hoveHighlights();

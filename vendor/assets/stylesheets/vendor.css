@@ -2,6 +2,6 @@
  *= require foundation/css/foundation
  *= require alertify/themes/alertify.core
  *= require alertify/themes/alertify.default
- *= require annotator.min
+ *= require annotator
  *= require pdf_viewer
  */
