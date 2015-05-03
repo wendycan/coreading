@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get 'site/about'
 
+  get 'articles/user_articles'
   resources :articles
 
   mount Api => '/api/'

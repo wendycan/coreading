@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150503070018) do
+ActiveRecord::Schema.define(version: 20150503071415) do
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -28,6 +28,10 @@ ActiveRecord::Schema.define(version: 20150503070018) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "pdf"
+    t.string   "type"
+    t.boolean  "public"
+    t.integer  "user_id"
   end
 
   create_table "comments", force: true do |t|

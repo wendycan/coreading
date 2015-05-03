@@ -1,0 +1,13 @@
+.row
+  .large-12.columns
+    #main-content.wrap
+      #u-articles
+        - @articles.each do |article|
+          %h4= article.title
+
+    = will_paginate @articles
+
+
+= content_for :js_ext do
+  :javascript
+    $('.my-articles-btn').addClass('active');
