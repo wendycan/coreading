@@ -1,6 +1,7 @@
 .row
   .large-12.columns
     #main-content.wrap
+      %a.button.tiny{:href => "/articles/new"} 创建
       #u-articles
         - @articles.each do |article|
           %h4
