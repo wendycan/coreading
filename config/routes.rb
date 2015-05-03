@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   get 'articles/user_articles'
   resources :articles
+  resources :annotations
 
   mount Api => '/api/'
   
