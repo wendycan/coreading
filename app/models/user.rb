@@ -7,4 +7,14 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :groups, join_table: 'users_groups'
   has_many :comments
   has_many :annotations
+
+  before_create :generate_authentication_token
+
+  def generate_authentication_token
+    loop do
+      self.authentication_token = SecureRandom.hex 20
+      break unless self.class.exists?(authentication_token: authentication_token)
+    end
+  end
+
 end

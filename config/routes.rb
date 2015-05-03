@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'site/about'
 
   resources :articles
+
+  mount Api => '/api/'
+  
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
