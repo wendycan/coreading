@@ -1,35 +1,47 @@
-= form_for(@article) do |f|
-  - if @article.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@article.errors.count, "error")
-        prohibited this article from being saved:
-      %ul
-        - @article.errors.full_messages.each do |message|
-          %li= message
-  .field
-    = f.label :title
-    %br
+.wrap
+  %h3.text-center 添加文章
+  = form_for(@article) do |f|
+    - if @article.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@article.errors.count, "error")
+          prohibited this article from being saved:
+        %ul
+          - @article.errors.full_messages.each do |message|
+            %li= message
+    .row
+      = f.label :title, '标题'
       = f.text_field :title
-  .field
-    = f.label :path_type
-    %br
+    .row#path-type
+      %label 文章来源
       = f.radio_button :path_type, 'pdf'
-      = f.label :type_pdf, '上传'
+      = f.label :path_type_pdf, '上传'
       = f.radio_button :path_type, 'online'
-      = f.label :type_online, '在线编辑'
-  .field
-    = f.label :body
-    %br
+      = f.label :path_type_online, '在线编辑'
+    .row#online-content
+      = f.label :body, '正文'
       = f.text_area :body
-  .field
-    = f.label :pdf
-    %br
-    = f.file_field :pdf
-  .field
-    = f.radio_button :public, '0'
-    = f.label :public_true, '公开'
-    = f.radio_button :public, '1'
-    = f.label :public_false, '不公开'
-  .actions
-    = f.submit '创建', class: 'button'
+    .row#pdf-upload-content
+      = f.label :pdf, '上传 pdf 文件'
+      = f.file_field :pdf
+    .row
+      %label 权限
+      = f.radio_button :public, '0'
+      = f.label :public_0, '公开'
+      = f.radio_button :public, '1'
+      = f.label :public_1, '不公开'
+    .actions
+      = f.submit '创建', class: 'button tiny'
+      = link_to '返回', articles_user_articles_path, class: 'button tiny'
+= content_for :js_ext do
+  :javascript
+    $('#online-content').hide();  
+    $('#path-type input').change(function(){
+      if($('#article_path_type_pdf').prop('checked')){
+        $('#pdf-upload-content').show();
+        $('#online-content').hide();
+      } else {
+        $('#pdf-upload-content').hide();
+        $('#online-content').show();      
+      }
+    });
