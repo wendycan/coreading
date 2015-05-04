@@ -27,9 +27,9 @@
     %br
     = f.file_field :pdf
   .field
-    = f.radio_button :public, 'true'
+    = f.radio_button :public, '0'
     = f.label :public_true, '公开'
-    = f.radio_button :public, 'false'
+    = f.radio_button :public, '1'
     = f.label :public_false, '不公开'
   .actions
     = f.submit '创建', class: 'button'

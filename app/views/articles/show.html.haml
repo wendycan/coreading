@@ -6,6 +6,17 @@
   %h2 {{= article.title}}
   %p {{= article.body }}
 
+%script{type: 'text/template', id: 't-article-pdf-show'}
+  %h2.text-center {{= article.title}}
+  {{ if(article.public == 0) { }}
+  %p.text-center 公开
+  {{ } else { }}
+  %p.text-center 不公开
+  {{ } }}
+  #pdf-viewer-container
+    #viewer.pdfViewer
+  #annotator-wedget
+
 - article_json = render template: "articles/show", formats: [:json], handlers: [:jbuilder]
 
 = content_for :js_ext do
@@ -13,4 +24,3 @@
     $(document).ready(function () {
       var articles_view = new Coreading.Views.Articles.ArticleView(#{article_json});
     });
-    $('.articles-btn').addClass('active');

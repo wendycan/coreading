@@ -9,4 +9,18 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
 
   renderArticle: =>
     article = @article.toJSON()
-    @$el.html(_.template($('#t-article-show').html())(article: article)) 
+    if article.path_type == 'online'
+      @$el.html(_.template($('#t-article-show').html())(article: article)) 
+    else
+      @$el.html(_.template($('#t-article-pdf-show').html())(article: article)) 
+      container = document.getElementById('pdf-viewer-container')
+      pdfViewer = new PDFJS.PDFViewer({
+        container: container
+      })
+      container.addEventListener 'pagesinit', ->
+        pdfViewer.currentScaleValue = 'page-width'
+      PDFJS.getDocument(article.pdf_url).then (pdfDocument)->
+        pdfViewer.setDocument(pdfDocument)
+      Annotator.textSelector($('#pdf-viewer-container'));
+      Annotator.hoveHighlights();
+

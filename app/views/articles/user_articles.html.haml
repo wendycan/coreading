@@ -4,8 +4,19 @@
       %a.button.tiny{:href => "/articles/new"} 创建
       #u-articles
         - @articles.each do |article|
-          %h4
-            = link_to article.title, article_path(article.id)
+          .row
+            .large-8.columns
+              %h5= link_to article.title, article_path(article.id)
+            .large-2.columns
+              - if article.path_type == 'pdf'
+                %p 上传 pdf
+              - else
+                %p 在线
+            .large-2.columns
+              - if article.public == 0
+                %p 公开
+              - else
+                %p 不公开
 
     = will_paginate @articles
 
