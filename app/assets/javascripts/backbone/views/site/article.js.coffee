@@ -21,6 +21,11 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
         pdfViewer.currentScaleValue = 'page-width'
       PDFJS.getDocument(article.pdf_url).then (pdfDocument)->
         pdfViewer.setDocument(pdfDocument)
+        
+      # container.addEventListener 'pagesloaded', ->
+      #   alert('aa')
+
       Annotator.textSelector($('#pdf-viewer-container'), {article: article});
       Annotator.hoveHighlights();
-      Annotator.load();
+      setTimeout(Annotator.load, 5000); #tmp
+      # Annotator.load();

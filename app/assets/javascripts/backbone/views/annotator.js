@@ -100,7 +100,6 @@ Annotator.load = function() {
   });
 },
 Annotator._onSaveClick = function (e, annotation) {
-  console.log(annotation)
   var text = $('.annotator-item textarea').val();
   annotation.text = text;
   Highlighter.draw(annotation);
