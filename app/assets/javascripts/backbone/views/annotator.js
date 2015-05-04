@@ -26,10 +26,24 @@ Annotator._checkForEndSelection = function(e){
   annotation = {};
   annotation.range = range.serialize(this.element[0], '.annotator-hl');
   annotation.quote = range.text();
-  var html = '<div class="annotator-adder annotator-hide" style="display:none"><button type="button">' + '编辑' + '</button></div>';
+  var html = [
+  '<div class="annotator-adder annotator-hide" style="display:none">',
+  '<i class="fa fa-star"></i>',
+  // '<i class="fa fa-underline"></i>',
+  '<i class="fa fa-comment"></i>',
+  '</div>'
+  ].join('\n');
   $('#annotator-wedget').html(html);
   Annotator.showWidget(position, $('.annotator-adder'));
-  $('.annotator-adder button').click(function(e){Annotator.clickAdderBtn(annotation, position, e)});
+  $('.annotator-adder i.fa-comment').click(function(e){
+    annotation.tag = 'comment';
+    Annotator.clickAdderBtn(annotation, position, e)});
+  $('.annotator-adder i.fa-star').click(function(e){
+    annotation.tag = 'star';
+    Annotator.createAnnotation(annotation);
+    Highlighter.draw(annotation);
+    $('#annotator-wedget').empty();
+  });
 },
 
 Annotator.clickAdderBtn = function (annotation, position, e) {
@@ -38,9 +52,8 @@ Annotator.clickAdderBtn = function (annotation, position, e) {
     '  <form class="annotator-widget">',
     '    <ul class="annotator-listing"></ul>',
     '    <div class="annotator-controls">',
-    '     <a href="#cancel" class="annotator-cancel">' + 'Cancel' + '</a>',
-    '      <a href="#save"',
-    '         class="annotator-save annotator-focus">' + 'Save' + '</a>',
+    '       <i class="fa fa-times-circle annotator-cancel"></i>',
+    '       <i class="fa fa-check annotator-save primary-color"></i>',
     '    </div>',
     '  </form>',
     '</div>'
@@ -106,6 +119,9 @@ Annotator._onSaveClick = function (e, annotation) {
   this.annotations.push(annotation);
   $('#annotator-wedget').empty();
   // to create annotator
+  Annotator.createAnnotation(annotation);
+};
+Annotator.createAnnotation = function (annotation, success, error) {
   var article = this.options.article;
   var user = this.options.account;
   $.ajax({
@@ -120,13 +136,13 @@ Annotator._onSaveClick = function (e, annotation) {
       range: JSON.stringify(annotation.range.toObject()),
       user_id: user.id,
       article_id: article.id,
-      tag: 'com'
+      tag: annotation.tag
     },
     success: function(data){
-      // console.log(data);
+      if (success) {success()}
     },
     error: function(e) {
-      console.log(e);
+      if (error) {error()}
     }
   });
 };
@@ -167,7 +183,7 @@ Annotator.addField = function (options) {
 
   input.attr({
       id: field.id,
-      placeholder: field.label
+      placeholder: '输入批注...'
   });
 
   if (field.type === 'checkbox') {
@@ -221,25 +237,37 @@ Annotator._onHighlightMouseover = function (e) {
           return $(elem).data("annotation");
       })
       .toArray()[0];
-  var html = [
-    '<div class="annotator-outer annotator-viewer annotator-hide">',
-    '<ul class="annotator-widget annotator-listing">',
-    '<li class="annotator-annotation annotator-item">',
-    '  <span class="annotator-controls">',
-    '    <a href="#"',
-    '       title="' + 'View as webpage' + '"',
-    '       class="annotator-link">' + annotation.text + '</a>',
-    '    <button type="button"',
-    '            title="' + 'Edit' + '"',
-    '            class="annotator-edit">' + 'Edit' + '</button>',
-    '    <button type="button"',
-    '            title="' + 'Delete' + '"',
-    '            class="annotator-delete">' + 'Delete' + '</button>',
-    '  </span>',
-    '</li>',
-    '</ul>',
-    '</div>'
-  ].join('\n');
+  var html;
+  if (annotation.tag == 'comment') {
+    html = [
+      '<div class="annotator-outer annotator-viewer annotator-hide">',
+      '<ul class="annotator-widget annotator-listing">',
+      '<li class="annotator-annotation annotator-item">',
+      '  <div class="annotator-controls">',
+      '    <a href="#"',
+      '       title="' + 'View as webpage' + '"',
+      '       class="annotator-link">' + annotation.text + '</a>',
+      '     <p class="text-right">',
+      '       <i class="fa fa-pencil-square-o annotator-edit primary-color"></i>',
+      '       <i class="fa fa-times-circle annotator-delete"></i>',
+      '     </p>',
+      '  </div>',
+      '</li>',
+      '</ul>',
+      '</div>'
+    ].join('\n');
+  } else {
+    html = ['<div class="annotator-outer annotator-viewer annotator-hide">',
+      '<ul class="annotator-widget annotator-listing">',
+      '<li class="annotator-annotation annotator-item">',
+      '  <div class="annotator-controls">',
+      '    <i class="fa fa-times-circle annotator-delete"></i>',
+      '  </div>',
+      '</li>',
+      '</ul>',
+      '</div>'
+    ].join('\n');
+  }
   $('#annotator-wedget').html(html);
   var offset = this.element.parent().offset(),
       position = {
