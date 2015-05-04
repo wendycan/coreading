@@ -80,15 +80,55 @@ Annotator.bindEvents = function (annotation) {
 Annotator._onFormSubmit = function (e) {
   // console.log('submit');
 };
+Annotator.load = function() {
+  var _this = this;
+  $.ajax({
+    url: '/api/v1/annotations',
+    type: 'GET',
+    headers: {
+      'Auth-Token': '7f1778cec77d6450be246ea28fa5dec7d2303697'
+    },
+    success: function(data){
+      data.forEach(function(annotation, index) {
+        annotation.range = Range.sniff(JSON.parse(annotation.range));
+        Highlighter.draw(annotation);
+      });
+    },
+    error: function(e) {
+      console.log(e);
+    }
+  });
+},
 Annotator._onSaveClick = function (e, annotation) {
   console.log(annotation)
   var text = $('.annotator-item textarea').val();
   annotation.text = text;
-  console.log(text)
   Highlighter.draw(annotation);
   this.annotations.push(annotation);
   $('#annotator-wedget').empty();
-  //to create annotator
+  // to create annotator
+  var article = this.options.article;
+  $.ajax({
+    url: '/api/v1/annotations',
+    type: 'POST',
+    headers: {
+      'Auth-Token': '7f1778cec77d6450be246ea28fa5dec7d2303697'
+    },
+    data: {
+      text: annotation.text,
+      quote: annotation.quote,
+      range: JSON.stringify(annotation.range.toObject()),
+      user_id: 2,
+      article_id: article.id,
+      tag: 'com'
+    },
+    success: function(data){
+      // console.log(data);
+    },
+    error: function(e) {
+      console.log(e);
+    }
+  });
 };
 Annotator._onCancelClick = function (e) {
   $('#annotator-wedget').empty();

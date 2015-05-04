@@ -32,7 +32,9 @@ class Api < Grape::API
       annotation.text = params[:text]
       annotation.range = params[:range]
       annotation.tag = params[:tag]
+      annotation.article_id = params[:article_id]
       annotation.user_id = @current_user.id
+
       if annotation.save
         {status: 201}
       else
@@ -46,7 +48,8 @@ class Api < Grape::API
       annotation.text = params[:text]
       annotation.range = params[:range]
       annotation.tag = params[:tag]
-      if annotation.save
+      annotation.article_id = params[:article_id]
+      if annotation.save && annotation.user_id == @current_user.id
         {status: 200}
       else
         {errors: 'annotation update failed', status: 422}
