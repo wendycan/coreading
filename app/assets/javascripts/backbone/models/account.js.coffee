@@ -10,7 +10,7 @@ class Coreading.Models.Account extends Backbone.Model
     success = opts.success
     _this = this
     $.ajax(
-      url: '/dashboard/index.json'
+      url: '/users/current.json'
       success: (data, status, xhr)->
         data.unsync = false
         _this.set(data)

@@ -1,17 +1,21 @@
 Rails.application.routes.draw do
-  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root to: "site#index"
 
   get 'site/about'
-
   get 'articles/user_articles'
+  get 'users/current'
+  
   resources :articles
   resources :annotations
+  
+  devise_for :users
+
+  resources :users
 
   mount Api => '/api/'
-  
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

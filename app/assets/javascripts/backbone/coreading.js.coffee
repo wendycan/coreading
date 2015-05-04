@@ -1,8 +1,8 @@
 #= require_self
 #= require ./views/base
+#= require_tree ./models
 #= require ./views/annotator
 #= require_tree ./common
-#= require_tree ./models
 #= require_tree ./views
 #= require_tree ./routers
 

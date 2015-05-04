@@ -107,17 +107,18 @@ Annotator._onSaveClick = function (e, annotation) {
   $('#annotator-wedget').empty();
   // to create annotator
   var article = this.options.article;
+  var user = this.options.account;
   $.ajax({
     url: '/api/v1/annotations',
     type: 'POST',
     headers: {
-      'Auth-Token': '7f1778cec77d6450be246ea28fa5dec7d2303697'
+      'Auth-Token': user.auth_token
     },
     data: {
       text: annotation.text,
       quote: annotation.quote,
       range: JSON.stringify(annotation.range.toObject()),
-      user_id: 2,
+      user_id: user.id,
       article_id: article.id,
       tag: 'com'
     },

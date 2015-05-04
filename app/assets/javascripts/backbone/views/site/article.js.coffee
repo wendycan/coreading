@@ -5,9 +5,21 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
 
   initialize: (opts)->
     @article = new Coreading.Models.Article(opts)
+    @account = new Coreading.Models.Account
     @renderArticle()
 
-  renderArticle: =>
+  fetchAccount: (success, error)->
+    if @account.get('unsync')
+      @account.fetch_account(
+        success: (data)=>
+          if success?
+            success()
+        error: ->
+          if error?
+            error()
+      )
+
+  renderArticle: ->
     article = @article.toJSON()
     if article.path_type == 'online'
       @$el.html(_.template($('#t-article-show').html())(article: article)) 
@@ -24,8 +36,11 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
         
       # container.addEventListener 'pagesloaded', ->
       #   alert('aa')
+      @fetchAccount =>
+        Annotator.textSelector($('#pdf-viewer-container'), {article: article, account: @account.toJSON()});
+      , =>
+        console.log('error')
 
-      Annotator.textSelector($('#pdf-viewer-container'), {article: article});
       Annotator.hoveHighlights();
       setTimeout(Annotator.load, 5000); #tmp
       # Annotator.load();
