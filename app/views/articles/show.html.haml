@@ -9,9 +9,16 @@
 %script{type: 'text/template', id: 't-article-pdf-show'}
   %h2.text-center {{= article.title}}
   {{ if(article.public == 0) { }}
-  %p.text-center 公开
+  .article-meta
+  %p.text-right 权限：公开
   {{ } else { }}
-  %p.text-center 不公开
+  %p.text-right 不公开
+  {{ } }}
+  .text-right
+  {{ if(article.path_type == 'pdf') { }}
+  %p.text-right 文章来源：上传 pdf
+  {{ } else { }}
+  %p.text-right 文章来源：在线
   {{ } }}
   #pdf-viewer-container
     #viewer.pdfViewer

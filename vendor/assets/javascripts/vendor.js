@@ -10,9 +10,7 @@
 //= require pdf_viewer
 //= require compatibility
 
-//= require annotator/lib/util
-//= require annotator/lib/xpath
-//= require annotator/lib/range
-//= require annotator/lib/highlighter
-
-//= require annotator/main
+//= require annotator/util
+//= require annotator/xpath
+//= require annotator/range
+//= require annotator/highlighter
