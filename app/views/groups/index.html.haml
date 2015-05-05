@@ -1,0 +1,26 @@
+.wrap
+  %h3 所有组
+
+  %table
+    %thead
+      %tr
+        %th 标题
+        %th 描述
+        %th 总数
+        %th 管理员
+        %th
+        %th
+        %th
+        
+    %tbody
+      - @groups.each do |group|
+        %tr
+          %td= group.title
+          %td= group.desc
+          %td= group.count
+          %td= User.find(group.admin_id).email
+          %td= link_to '查看', group
+          %td= link_to '编辑', edit_group_path(group)
+          %td= link_to '删除', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+  = link_to '创建组', new_group_path, class: 'button tiny'

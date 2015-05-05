@@ -33,6 +33,7 @@
     .actions
       = f.submit '创建', class: 'button tiny'
       = link_to '返回', articles_user_articles_path, class: 'button tiny'
+      
 = content_for :js_ext do
   :javascript
     $('#online-content').hide();  

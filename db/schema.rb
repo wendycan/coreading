@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505013911) do
+ActiveRecord::Schema.define(version: 20150505021224) do
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20150505013911) do
 
   create_table "groups", force: true do |t|
     t.string   "title"
-    t.text     "desc"
+    t.string   "desc"
     t.integer  "count"
     t.integer  "admin_id"
     t.datetime "created_at"

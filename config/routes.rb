@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :groups
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root to: "site#index"
@@ -6,6 +8,7 @@ Rails.application.routes.draw do
   get 'site/about'
   get 'articles/user_articles'
   get 'users/current'
+  get 'users/group'
   
   resources :articles
   resources :annotations

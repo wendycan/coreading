@@ -23,7 +23,7 @@
         %ul.dropdown
           - if user_signed_in?
             %li
-              %a{:href => "#"} 小组
+              = link_to '小组', users_group_path
             %li
               %a{:href => "#"} 设置
             %li

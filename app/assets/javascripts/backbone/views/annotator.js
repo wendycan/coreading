@@ -98,11 +98,12 @@ Annotator._onFormSubmit = function (e) {
 };
 Annotator.load = function() {
   var _this = this;
+  var user = Annotator.options.account;
   $.ajax({
     url: '/api/v1/annotations',
     type: 'GET',
     headers: {
-      'Auth-Token': '7f1778cec77d6450be246ea28fa5dec7d2303697'
+      'Auth-Token': user.auth_token
     },
     success: function(data){
       data.forEach(function(annotation, index) {

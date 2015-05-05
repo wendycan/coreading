@@ -1,0 +1,17 @@
+.wrap
+  %p#notice= notice
+
+  %p
+    %b 标题:
+    = @group.title
+  %p
+    %b 描述:
+    = @group.desc
+  %p
+    %b 总人数:
+    = @group.count
+  %p
+    %b 管理员:
+    = User.find(@group.admin_id).email
+
+  = link_to '编辑', edit_group_path(@group), class: 'button tiny'

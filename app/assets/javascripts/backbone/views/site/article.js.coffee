@@ -42,5 +42,5 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
         console.log('error')
 
       Annotator.hoveHighlights();
-      setTimeout(Annotator.load, 5000); #tmp
+      setTimeout(Annotator.load, 3000); #tmp
       # Annotator.load();

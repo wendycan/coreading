@@ -10,3 +10,17 @@
 article.alertify-log {
   padding: 10px 20px;
 }
+
+.user-groups li {
+  padding: 15px 5px;
+  border-bottom: solid 1px #d5d5d5;
+  list-style: none;
+}
+.user-groups li:last-child {
+  border: none;
+}
+.user-groups ul {
+  background-color: #f0fbff;
+  margin-left: 0;
+  border-radius: 5px;
+}

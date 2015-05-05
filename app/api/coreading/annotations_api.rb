@@ -4,8 +4,7 @@ module Coreading
       desc 'Get all annotations'
       get do
         authenticate!
-        annotations = current_user.annotations.order("created_at DESC")
-        # JSON.parse annotations.to_json(:include => :user)
+        annotations = current_user.annotations#.order("created_at DESC").all
         annotations
       end
 
