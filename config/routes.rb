@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :groups
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -9,10 +8,13 @@ Rails.application.routes.draw do
   get 'articles/user_articles'
   get 'users/current'
   get 'users/group'
+
+  resources :groups do
+    get 'articles'
+  end
   
   resources :articles
   resources :annotations
-  
   devise_for :users
 
   resources :users

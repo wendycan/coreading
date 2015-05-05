@@ -1,6 +1,9 @@
 class Article < ActiveRecord::Base
   belongs_to :user
+  belongs_to :group
+  
   has_many :comments
+  has_many :annotations
   
   validates :title, presence: true
   validates :pdf, presence: true

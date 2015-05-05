@@ -2,9 +2,18 @@
   .large-12.columns
     #main-content.wrap
       #u-annotations
+        .row
+          .large-8.columns
+            %h5 批注
+          .large-4.columns
+            %p 文章
         - @annotations.each do |annotation|
-          %h4
-            = link_to annotation.text, annotation_path(annotation.id)
+          .row
+            .large-8.columns
+              %h5
+                = link_to annotation.text, annotation_path(annotation.id)
+            .large-4.columns
+              %p= link_to annotation.article.title, article_path(annotation.article.id)
 
     = will_paginate @annotations
 

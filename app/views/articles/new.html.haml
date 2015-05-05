@@ -24,12 +24,16 @@
     .row#pdf-upload-content
       = f.label :pdf, '上传 pdf 文件'
       = f.file_field :pdf
-    .row
+    .row#public-type
       %label 权限
       = f.radio_button :public, '0'
       = f.label :public_0, '公开'
       = f.radio_button :public, '1'
-      = f.label :public_1, '不公开'
+      = f.label :public_1, '组'
+      = f.radio_button :public, '2'
+      = f.label :public_2, '私有'
+    .row#group-select-content
+      = f.select :group_id, options_for_select(current_user.groups.collect{|g| g.title})
     .actions
       = f.submit '创建', class: 'button tiny'
       = link_to '返回', articles_user_articles_path, class: 'button tiny'
@@ -37,6 +41,7 @@
 = content_for :js_ext do
   :javascript
     $('#online-content').hide();  
+    $('#group-select-content').hide();
     $('#path-type input').change(function(){
       if($('#article_path_type_pdf').prop('checked')){
         $('#pdf-upload-content').show();
@@ -46,3 +51,11 @@
         $('#online-content').show();      
       }
     });
+    $('#public-type').change(function(){
+      if($('#article_public_1').prop('checked')){
+        $('#group-select-content').show();
+      } else {
+        $('#group-select-content').hide();
+      }    
+    })
+

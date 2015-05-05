@@ -1,0 +1,22 @@
+.wrap
+  %h4 所有文章
+  .row
+    .large-8.columns
+      %h5 标题
+    .large-2.columns
+      %p 批注数
+    .large-2.columns
+      %p 来源
+      
+  - @articles.each do |article|
+    .row
+      .large-8.columns
+        %h5= link_to article.title, article_path(article.id)
+      .large-2.columns
+        %p= article.annotations.length
+      .large-2.columns
+        - if article.path_type == 'pdf'
+          %p 上传 pdf
+        - else
+          %p 在线
+    

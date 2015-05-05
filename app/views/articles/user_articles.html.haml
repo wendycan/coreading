@@ -4,16 +4,20 @@
       %a.button.tiny{:href => "/articles/new"} 创建
       #u-articles
         .row
-          .large-8.columns
+          .large-6.columns
             %h5 标题
+          .large-2.columns
+            %p 批注数
           .large-2.columns
             %p 来源
           .large-2.columns
             %p 权限
         - @articles.each do |article|
           .row
-            .large-8.columns
+            .large-6.columns
               %h5= link_to article.title, article_path(article.id)
+            .large-2.columns
+              %p= article.annotations.length
             .large-2.columns
               - if article.path_type == 'pdf'
                 %p 上传 pdf
@@ -21,9 +25,13 @@
                 %p 在线
             .large-2.columns
               - if article.public == 0
-                %p 公开
-              - else
-                %p 不公开
+                %span.label.radius 公开
+              - if article.public == 1
+                %p 
+                  %span.label.radius 组 
+                  %span= article.group.title
+              - if article.public == 2
+                %p 个人
 
     = will_paginate @articles
 

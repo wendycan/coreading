@@ -8,8 +8,10 @@
         .row
           .large-8.columns
             %h5 组名
-          .large-2.columns
-            %span 成员人数
+          .large-1.columns
+            %span 成员数
+          .large-1.columns
+            %span 文章数
           .large-2.columns
             %span 管理员
       - @groups.each do |group|
@@ -17,9 +19,11 @@
           .row
             .large-8.columns
               %h5
-                = link_to group.title, group_path(group.id)
-            .large-2.columns
-              %span= group.count
+                = link_to group.title, group_articles_path(group.id)
+            .large-1.columns
+              %span= group.users.length
+            .large-1.columns
+              %span= group.articles.length
             .large-2.columns
               %span= User.find(group.admin_id).email
           .row

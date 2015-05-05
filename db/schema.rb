@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505021224) do
+ActiveRecord::Schema.define(version: 20150505081106) do
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20150505021224) do
     t.integer  "public",     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
 
   create_table "comments", force: true do |t|
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 20150505021224) do
     t.integer  "admin_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "articles_count"
   end
 
   create_table "usergroups", force: true do |t|
@@ -77,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150505021224) do
     t.datetime "updated_at"
     t.string   "authentication_token"
     t.boolean  "editable",               default: false
+    t.string   "username"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -8,6 +8,11 @@ class GroupsController < ApplicationController
     respond_with(@groups)
   end
 
+  def articles
+    @group = Group.find(params[:group_id])
+    @articles = @group.articles
+  end
+
   def show
     respond_with(@group)
   end
