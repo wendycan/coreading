@@ -3,6 +3,13 @@
     #main-content.wrap
       %a.button.tiny{:href => "/articles/new"} 创建
       #u-articles
+        .row
+          .large-8.columns
+            %h5 标题
+          .large-2.columns
+            %p 来源
+          .large-2.columns
+            %p 权限
         - @articles.each do |article|
           .row
             .large-8.columns
