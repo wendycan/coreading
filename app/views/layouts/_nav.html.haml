@@ -12,8 +12,8 @@
         - if user_signed_in?
           %li.my-articles-btn
             = link_to '我的文章', users_articles_path
-          %li.annotations-btn
-            = link_to '我的批注', annotations_path
+          %li.my-groups-btn
+            = link_to '我的小组', users_group_path
       %li.has-dropdown
         = link_to new_user_session_path do
           - if user_signed_in?
@@ -23,7 +23,7 @@
         %ul.dropdown
           - if user_signed_in?
             %li
-              = link_to '小组', users_group_path
+              = link_to '我的批注', annotations_path
             %li
               %a{:href => "#"} 设置
             %li

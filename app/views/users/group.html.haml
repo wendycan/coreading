@@ -1,7 +1,5 @@
 .wrap
   %h4 参与的组
-  -# %a.button.tiny{:href => "#"}  添加用户
-  = link_to '创建组', new_group_path, :class => 'button tiny'
   .user-groups
     %ul
       %li
@@ -42,3 +40,9 @@
           .row
             .large-12.columns
               %p= group.desc
+  %hr
+  = link_to '创建组', new_group_path, :class => 'button tiny'
+
+= content_for :js_ext do
+  :javascript
+    $('.my-groups-btn').addClass('active');

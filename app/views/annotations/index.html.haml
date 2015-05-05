@@ -34,7 +34,3 @@
               %p= annotation.created_at.strftime("%m月%d号")
 
     = will_paginate @annotations
-
-= content_for :js_ext do
-  :javascript
-    $('.annotations-btn').addClass('active');
