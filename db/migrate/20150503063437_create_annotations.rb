@@ -6,6 +6,7 @@ class CreateAnnotations < ActiveRecord::Migration
       t.text :quote
       t.string :tag
       t.text :range
+      t.integer :article_id
 
       t.timestamps
     end

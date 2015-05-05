@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_and_belongs_to_many :groups, join_table: 'users_groups'
   has_many :comments
   has_many :annotations
   has_many :articles
+  has_many :usergroups
+  has_many :groups, :through => :usergroups
 
   before_create :generate_authentication_token
 

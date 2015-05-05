@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504033430) do
+ActiveRecord::Schema.define(version: 20150505013911) do
 
   create_table "annotations", force: true do |t|
     t.integer  "user_id"
@@ -19,20 +19,20 @@ ActiveRecord::Schema.define(version: 20150504033430) do
     t.text     "quote"
     t.string   "tag"
     t.text     "range"
+    t.integer  "article_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "article_id"
   end
 
   create_table "articles", force: true do |t|
     t.string   "title"
     t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "pdf"
     t.string   "path_type",  default: "pdf"
-    t.integer  "public",     default: 0
     t.integer  "user_id"
+    t.integer  "public",     default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", force: true do |t|
@@ -55,13 +55,20 @@ ActiveRecord::Schema.define(version: 20150504033430) do
     t.datetime "updated_at"
   end
 
+  create_table "usergroups", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -69,18 +76,10 @@ ActiveRecord::Schema.define(version: 20150504033430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
-    t.boolean  "editable"
+    t.boolean  "editable",               default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-
-  create_table "users_groups", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "group_id"
-  end
-
-  add_index "users_groups", ["group_id"], name: "index_users_groups_on_group_id"
-  add_index "users_groups", ["user_id"], name: "index_users_groups_on_user_id"
 
 end
