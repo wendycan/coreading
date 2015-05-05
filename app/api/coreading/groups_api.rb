@@ -76,6 +76,12 @@ module Coreading
           if group && (group.admin_id != current_user.id)
             error!('401 Unauthorized', 401)
           end
+          group.articles.each do |article|
+            article.destroy!
+            article.annotations.each do |annotations|
+              annotations.destroy!
+            end
+          end
           group.destroy!
           {status: 204}
         end

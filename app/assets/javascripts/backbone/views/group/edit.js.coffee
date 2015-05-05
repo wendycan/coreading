@@ -16,8 +16,6 @@ class Coreading.Views.Groups.GroupEditView extends Backbone.View
     @account = new Coreading.Models.Account
     @opts = opts
     @fetchAccount =>
-      console.log(opts)
-      console.log(@account)
       @render(opts)
 
   fetchAccount: (success, error)->
