@@ -40,9 +40,12 @@ Annotator._checkForEndSelection = function(e){
     Annotator.clickAdderBtn(annotation, position, e)});
   $('.annotator-adder i.fa-star').click(function(e){
     annotation.tag = 'star';
-    Annotator.createAnnotation(annotation);
-    Highlighter.draw(annotation);
+
     $('#annotator-wedget').empty();
+    Annotator.createAnnotation(annotation, function(data){
+      annotation.id = data.id;
+      Highlighter.draw(annotation);
+    });
   });
 },
 
@@ -115,11 +118,13 @@ Annotator.load = function() {
 Annotator._onSaveClick = function (e, annotation) {
   var text = $('.annotator-item textarea').val();
   annotation.text = text;
-  Highlighter.draw(annotation);
   this.annotations.push(annotation);
-  $('#annotator-wedget').empty();
   // to create annotator
-  Annotator.createAnnotation(annotation);
+  $('#annotator-wedget').empty();
+  Annotator.createAnnotation(annotation, function(data){
+    annotation.id = data.id;
+    Highlighter.draw(annotation);
+  });
 };
 Annotator.createAnnotation = function (annotation, success, error) {
   var article = this.options.article;
@@ -139,13 +144,33 @@ Annotator.createAnnotation = function (annotation, success, error) {
       tag: annotation.tag
     },
     success: function(data){
-      if (success) {success()}
+      alertify.success("成功创建此批注");
+      if (success) {success(data)}
     },
     error: function(e) {
-      if (error) {error()}
+      alertify.success("批注创建失败，请稍后重试。");
+      if (error) {error(e)}
     }
   });
 };
+Annotator.deleteAnnotation = function(annotation, success) {
+  var user = this.options.account;
+  $.ajax({
+    url: '/api/v1/annotations/' + annotation.id,
+    type: 'DELETE',
+    headers: {
+      'Auth-Token': user.auth_token
+    },
+    success: function(data){
+      alertify.success("成功删除此批注");
+      if (success) {success(data)}
+    }, 
+    error: function(e) {
+      alertify.success("批注删除失败，请稍后重试。");
+      if (error) {error(e)}
+    }
+  })
+}
 Annotator._onCancelClick = function (e) {
   $('#annotator-wedget').empty();
 };
@@ -275,6 +300,11 @@ Annotator._onHighlightMouseover = function (e) {
           left: e.pageX - offset.left
       };
   Annotator.showWidget(position, $('.annotator-viewer'));
+  $('#annotator-wedget .annotator-delete').click(function(){
+    Highlighter.undraw(annotation);
+    $('#annotator-wedget').empty();
+    Annotator.deleteAnnotation(annotation);
+  });
 };
 
 Annotator.captureDocumentSelection = function () {

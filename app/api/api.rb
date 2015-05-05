@@ -36,7 +36,7 @@ class Api < Grape::API
       annotation.user_id = @current_user.id
 
       if annotation.save
-        {status: 201}
+        annotation
       else
         {errors: 'annotation create failed', status: 422}
       end
