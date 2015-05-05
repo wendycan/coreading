@@ -20,12 +20,21 @@
   = link_to '删除', '#', class: 'button tiny', id: 'delete-group'
 
 %script{type: 'text/template', id: 't-user'}
-  %li.row{'data-username' => '{{= username }}'}
+  %li.row.border-bottom{'data-username' => '{{= username }}'}
     .large-11.columns
       %h5 {{= username }}
-    .large-1.columns
+    .large-1.columns.text-right
       %i.fa.fa-times.remove-user
 %script{type: 'text/template', id: 't-article'}
+  %li.row.border-bottom{'data-article-id' => '{{= article.id }}'}
+    .large-6.columns
+      %h5 {{=article.title}}
+    .large-4.columns
+      %p {{= article.created_at }}
+    .large-1.columns
+      %p {{= article.username }}
+    .large-1.columns.text-right
+      %i.fa.fa-times#remove-article
 
 %script{type: 'text/template', id: 't-add-user-form'}
   %form.row

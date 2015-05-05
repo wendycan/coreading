@@ -9,6 +9,8 @@ class Coreading.Views.Groups.GroupEditView extends Backbone.View
     'click #submit-add-user' : 'submitAddUser'
     'click .remove-user' : 'removeUser'
     'click #cancel-add-user' : 'cancelAddUser'
+    'click #remove-article' : 'removeArticle'
+    'click #delete-group' : 'deleteGroup'
 
   initialize: (opts)->
     @account = new Coreading.Models.Account
@@ -40,7 +42,7 @@ class Coreading.Views.Groups.GroupEditView extends Backbone.View
     users.forEach (username)->
       $('#user-list').append _.template($('#t-user').html())(username: username)
     articles.forEach (article)->
-      $('#articles-list').append _.template($('#t-article').html())(article: article)
+      $('#article-list').append _.template($('#t-article').html())(article: article)
 
   addUser: ()->
     $('#add-user-btn').hide()
@@ -106,6 +108,39 @@ class Coreading.Views.Groups.GroupEditView extends Backbone.View
   cancelAddUser: ->
     $('#add-user-btn').show()
     $('#add-user').empty()
-    
-  saveMeta: ->
 
+  saveMeta: ->
+    $.ajax
+      url: "/api/v1/groups/#{@opts.id}/group_meta"
+      type: "PUT"
+      data:
+        title: $('#title').val()
+        desc: $('#desc').val()
+      headers:
+        'Auth-Token': @account.get('auth_token')
+      success: (data)->
+        alertify.success("修改成功保存")
+      error: (e)->
+        alertify.error("操作失败，请稍后重试");
+
+  deleteGroup: ->
+    _this = this
+    alertify.set labels: {
+      ok     : "确定"
+      cancel : "取消"
+      }
+    alertify.confirm "确定将删除当前小组?", (e)->
+      if e
+        $.ajax
+          url: "/api/v1/groups/#{_this.opts.id}"
+          type: "DELETE"
+          headers:
+            'Auth-Token': _this.account.get('auth_token')
+          success: (data)->
+            window.location = '/users/group'
+          error: (e)->
+            alertify.error("操作失败，请稍后重试");
+      else 
+        return
+
+  removeArticle: ->

@@ -12,7 +12,7 @@ module Coreading
         put 'add_user' do
           authenticate!
           group = Group.find(params[:id])
-          if group.admin_id != current_user.id
+          if group && (group.admin_id != current_user.id)
             error!('401 Unauthorized', 401)
           end
           user = User.where(username: params[:username])[0]
@@ -29,7 +29,7 @@ module Coreading
         put 'remove_user' do
           authenticate!
           group = Group.find(params[:id])
-          if group.admin_id != current_user.id
+          if group && (group.admin_id != current_user.id)
             error!('401 Unauthorized', 401)
           end
 
@@ -50,8 +50,36 @@ module Coreading
           Usergroup.where(group_id: group.id, user_id: user.id)[0].delete
           group
         end
-      end
 
+        put 'group_meta' do
+          authenticate!
+          group = Group.find(params[:id])
+          if group && (group.admin_id != current_user.id)
+            error!('401 Unauthorized', 401)
+          end
+
+          if params[:title]
+            group.title = params[:title]
+          end
+
+          if params[:desc]
+            group.desc = params[:desc]
+          end
+          group.save
+          group
+        end
+
+        desc 'Delete a group'
+        delete do
+          authenticate!
+          group = Group.find(params[:id])
+          if group && (group.admin_id != current_user.id)
+            error!('401 Unauthorized', 401)
+          end
+          group.destroy!
+          {status: 204}
+        end
+      end
     end
   end
 end

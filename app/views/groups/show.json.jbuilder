@@ -4,5 +4,7 @@ json.desc @group.desc
 json.count @group.count
 json.admin_id @group.admin_id
 json.created_at @group.created_at
-json.articles @group.articles
+json.articles @group.articles.collect {|a| {
+  title: a.title, created_at: a.created_at, username: User.find(a.user_id).username} 
+}
 json.usernames @group.users.collect { |u| u.username  }

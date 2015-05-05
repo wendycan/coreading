@@ -33,7 +33,7 @@
       = f.radio_button :public, '2'
       = f.label :public_2, '私有'
     .row#group-select-content
-      = f.select :group_id, options_for_select(current_user.groups.collect{|g| g.title})
+      = f.select :group_id, options_for_select(current_user.groups.collect{|g| [g.title, g.id]})
     .actions
       = f.submit '创建', class: 'button tiny'
       = link_to '返回', users_articles_path, class: 'button tiny'
