@@ -1,17 +1,59 @@
-.wrap
+.wrap#main-content.group-edit-content
   %h3 小组管理
   %br
 
-  %h5 成员信息
-  %ul.user-list
-    %li user1
-    %li user2
-  = link_to '添加成员', '#', class: 'button tiny'
+  .row
+    .large-11.columns
+      %h5 成员信息
+    .large-1.columns.text-right
+      #add-user-btn.fa.fa-plus-square
+  %ul#user-list
+  #add-user
+  %hr
+  %h5 文章信息
+  #article-list
   %hr
   %h5 基本信息
-  = render 'form'
+  #edit-group
   %hr
   %h5 危险操作
-  = link_to '删除', '#', class: 'button tiny'
+  = link_to '删除', '#', class: 'button tiny', id: 'delete-group'
 
-  
+%script{type: 'text/template', id: 't-user'}
+  %li.row{'data-username' => '{{= username }}'}
+    .large-11.columns
+      %h5 {{= username }}
+    .large-1.columns
+      %i.fa.fa-times.remove-user
+%script{type: 'text/template', id: 't-article'}
+
+%script{type: 'text/template', id: 't-add-user-form'}
+  %form.row
+    .field.large-10.columns
+      %label{for: 'username'} 
+        用户名
+        %input#username{name: 'username', type: 'text', placeholder: '输入用户名'}
+    .field.large-2.columns
+      %br
+      .button.tiny#submit-add-user 确定
+      .button.tiny#cancel-add-user 取消
+
+%script{type: 'text/template', id: 't-edit-group'}
+  %form  
+    .field
+      %label{for: 'title'} 标题
+      %input#title{name: 'title', value: '{{= group.title }}', type: 'text'}
+    .field
+      %label{for: 'desc'} 描述
+      %textarea#desc{name: 'desc'} {{= group.desc }}
+    .field
+      .button.tiny#save-meta 保存
+
+- group_json = render template: "groups/show", formats: [:json], handlers: [:jbuilder]
+
+= content_for :js_ext do
+  :javascript
+    $(document).ready(function () {
+      var group_edit_view = new Coreading.Views.Groups.GroupEditView(#{group_json});
+    });
+    $('.my-groups-btn').addClass('active');

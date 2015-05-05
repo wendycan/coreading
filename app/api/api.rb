@@ -17,7 +17,7 @@ class Api < Grape::API
 
     def authenticate!
       error!('401 Unauthorized', 401) unless current_user
-      error!('400 Not found', 400) unless current_user.editable
+      error!('404 Not found', 404) unless current_user.editable
     end
 
     def locate_user
@@ -64,5 +64,6 @@ class Api < Grape::API
   end
 
   mount Coreading::Annotation
+  mount Coreading::Groups
 
 end
