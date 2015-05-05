@@ -6,4 +6,8 @@ class UsersController < ApplicationController
   def group
     @groups = current_user.groups
   end
+
+  def articles
+    @articles = current_user.articles.paginate(:page => params[:page])
+  end
 end

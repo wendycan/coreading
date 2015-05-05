@@ -2,18 +2,36 @@
   .large-12.columns
     #main-content.wrap
       #u-annotations
-        .row
-          .large-8.columns
-            %h5 批注
+        .row.border-bottom
           .large-4.columns
+            %h5 批注
+          .large-3.columns
+            %p 评论
+          .large-1.columns
+            %p 类型
+          .large-2.columns
             %p 文章
+          .large-2.columns
+            %p 创建于
         - @annotations.each do |annotation|
-          .row
-            .large-8.columns
-              %h5
-                = link_to annotation.text, annotation_path(annotation.id)
+          .row.border-bottom
             .large-4.columns
+              %h5
+                = link_to annotation.quote, ''
+            .large-3.columns 
+              - if annotation.text?
+                %p= annotation.text
+              - else
+                %p= ''
+            .large-1.columns
+              - if annotation.tag == 'star'
+                %p.label.radius 重点
+              - if annotation.tag == 'comment'
+                %p.label.radius 评论
+            .large-2.columns
               %p= link_to annotation.article.title, article_path(annotation.article.id)
+            .large-2.columns
+              %p= annotation.created_at.strftime("%m月%d号")
 
     = will_paginate @annotations
 

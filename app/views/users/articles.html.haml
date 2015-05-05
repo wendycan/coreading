@@ -4,7 +4,7 @@
       %a.button.tiny{:href => "/articles/new"} 创建
       #u-articles
         .row.border-bottom
-          .large-6.columns
+          .large-4.columns
             %h5 标题
           .large-2.columns
             %p 批注数
@@ -12,9 +12,11 @@
             %p 来源
           .large-2.columns
             %p 权限
+          .large-2.columns
+            %p 创建时间
         - @articles.each do |article|
           .row.border-bottom
-            .large-6.columns
+            .large-4.columns
               %h5= link_to article.title, article_path(article.id)
             .large-2.columns
               %p= article.annotations.length
@@ -32,7 +34,8 @@
                   %span= article.group.title
               - if article.public == 2
                 %p 个人
-
+            .large-2.columns
+              %p= article.created_at.strftime("%m月%d号")
     = will_paginate @articles
 
 = content_for :js_ext do

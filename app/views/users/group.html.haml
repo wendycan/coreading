@@ -6,7 +6,7 @@
     %ul
       %li
         .row
-          .large-8.columns
+          .large-5.columns
             %h5 组名
           .large-1.columns
             %span 成员数
@@ -14,10 +14,14 @@
             %span 文章数
           .large-2.columns
             %span 管理员
+          .large-2.columns
+            %span 创建时间
+          .large-1.columns
+            %span= ''
       - @groups.each do |group|
         %li
           .row
-            .large-8.columns
+            .large-5.columns
               %h5
                 = link_to group.title, group_articles_path(group.id)
             .large-1.columns
@@ -26,6 +30,15 @@
               %span= group.articles.length
             .large-2.columns
               %span= User.find(group.admin_id).email
+            .large-2.columns
+              %span= group.created_at.strftime("%m月%d号")
+            .large-1.columns
+              - if current_user.id == group.admin_id
+                %span
+                  = link_to edit_group_path(group) do
+                    %i.fa.fa-pencil-square-o
+              - else
+                %span= ''
           .row
             .large-12.columns
               %p= group.desc

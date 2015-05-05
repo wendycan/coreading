@@ -36,7 +36,7 @@
       = f.select :group_id, options_for_select(current_user.groups.collect{|g| g.title})
     .actions
       = f.submit '创建', class: 'button tiny'
-      = link_to '返回', articles_user_articles_path, class: 'button tiny'
+      = link_to '返回', users_articles_path, class: 'button tiny'
       
 = content_for :js_ext do
   :javascript

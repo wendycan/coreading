@@ -7,10 +7,6 @@ class ArticlesController < ApplicationController
     @article = Article.find_by_id(params[:id])
   end
 
-  def user_articles
-    @articles = current_user.articles.paginate(:page => params[:page])
-  end
-
   def new
     @article = Article.new
   end

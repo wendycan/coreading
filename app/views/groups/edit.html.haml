@@ -1,4 +1,17 @@
 .wrap
-  %h3 编辑组
+  %h3 小组管理
+  %br
 
+  %h5 成员信息
+  %ul.user-list
+    %li user1
+    %li user2
+  = link_to '添加成员', '#', class: 'button tiny'
+  %hr
+  %h5 基本信息
   = render 'form'
+  %hr
+  %h5 危险操作
+  = link_to '删除', '#', class: 'button tiny'
+
+  

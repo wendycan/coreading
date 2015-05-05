@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'articles/user_articles'
   get 'users/current'
   get 'users/group'
+  get 'users/articles'
 
   resources :groups do
     get 'articles'
@@ -17,7 +18,7 @@ Rails.application.routes.draw do
   resources :annotations
   devise_for :users
 
-  resources :users
+  resources :users 
 
   mount Api => '/api/'
 
