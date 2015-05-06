@@ -58,6 +58,9 @@ class Api < Grape::API
 
     def delete_annotation
       annotation = Annotation.find(params[:id])
+      if annotation.user_id != @current_user.user_id
+        error!('403 Forbidden', 403)
+      end
       annotation.destroy!
       {status: 204}
     end

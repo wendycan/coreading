@@ -5,11 +5,11 @@
 %script{type: 'text/template', id: 't-article-show'}
   %h2 {{= article.title}}
   %p {{= article.body }}
+  #annotaions-meta
 
 %script{type: 'text/template', id: 't-article-pdf-show'}
   %h2.text-center {{= article.title}}
   {{ if(article.public == 0) { }}
-  .article-meta
   %p.text-right 权限：公开
   {{ } else { }}
   %p.text-right 不公开
@@ -20,9 +20,22 @@
   {{ } else { }}
   %p.text-right 文章来源：在线
   {{ } }}
+  #annotaions-meta
   #pdf-viewer-container
     #viewer.pdfViewer
   #annotator-wedget
+
+%script{type: 'text/template', id: 't-annotation-meta'}
+  .row
+    .large-1.columns
+      .label.radus 
+        共
+        %span#annotations-count{'data-annotations-count' => 0} 
+          .fa.fa-spinner.fa-spin
+        个批注
+    .large-11.columns#annotations-users
+      -# %p 批注成员
+      -# #annotations-users{'data-users'}
 
 - article_json = render template: "articles/show", formats: [:json], handlers: [:jbuilder]
 

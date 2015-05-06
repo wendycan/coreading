@@ -26,6 +26,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       @$el.html(_.template($('#t-article-show').html())(article: article)) 
     else
       @$el.html(_.template($('#t-article-pdf-show').html())(article: article)) 
+      
       container = document.getElementById('pdf-viewer-container')
       pdfViewer = new PDFJS.PDFViewer({
         container: container
@@ -45,3 +46,5 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       Annotator.hoveHighlights();
       setTimeout(Annotator.load, 3000); #tmp
       # Annotator.load();
+    if article.public == 1
+      $('#annotaions-meta').html _.template($('#t-annotation-meta').html())()

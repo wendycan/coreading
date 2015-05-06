@@ -1,6 +1,7 @@
 var Annotator = {
   fields : [],
-  annotations : []
+  annotations : [],
+  users: []
 };
 var NS = "annotator-editor";
 var NSV = "annotator-viewer";
@@ -116,6 +117,7 @@ Annotator.load = function() {
         data.forEach(function(d) {
           var anns = d.annotations;
           var username = d.username;
+          Annotator.users.push(username);
           anns.forEach(function (ann) {
             ann.username = username;
             Annotator.annotations.push(ann);
@@ -130,11 +132,21 @@ Annotator.load = function() {
         annotation.range = Range.sniff(JSON.parse(annotation.range));
         Highlighter.draw(annotation);
       });
+      Annotator.renderAnnotationsMeta();
     },
     error: function(e) {
       console.log(e);
     }
   });
+},
+Annotator.renderAnnotationsMeta = function () {
+  $('#annotations-count').text(Annotator.annotations.length).data('annotations-count', Annotator.annotations.length);
+  if (Annotator.options.article.public == 1) {
+    $('#annotations-users').html('<p><small>批注成员</small><span class="user-list"></span></p>');
+    Annotator.users.forEach(function (username) {
+      $('#annotations-users .user-list').append('<span class="label radius" data-username=' + username + '>' + username + '</span>');
+    })
+  };
 },
 Annotator._onSaveClick = function (e, annotation) {
   var text = $('.annotator-item textarea').val();
@@ -147,7 +159,7 @@ Annotator._onSaveClick = function (e, annotation) {
   Annotator.createAnnotation(annotation, function(data){
     annotation.id = data.id;
     annotation.update_time = data.update_time;
-    
+
     Highlighter.draw(annotation);
   });
 };
@@ -297,6 +309,7 @@ Annotator._onHighlightMouseover = function (e) {
       '    <a href="#"',
       '       title="' + 'View as webpage' + '"',
       '       class="annotator-link">' + annotation.text + '</a>',
+      '     <p>' + annotation.username + ' 3小时前' + '添加</p>',
       '     <p class="text-right">',
       '       <i class="fa fa-pencil-square-o annotator-edit primary-color"></i>',
       '       <i class="fa fa-times-circle annotator-delete"></i>',
