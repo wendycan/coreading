@@ -314,48 +314,52 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
     # if (@mouseDown) {
     #     return;
     # }
-    annotation = $(e.target)
-        # .parents('.annotator-hl')
+    annotations = $(e.target)
+        .parents('.annotator-hl')
         .addBack()
         .map((_, elem)->
           return $(elem).data("annotation")
         )
-        .toArray()[0]
-    html = []
-    if annotation.tag == 'comment'
-      html = [
-        '<div class="annotator-outer annotator-viewer annotator-hide">',
-        '<ul class="annotator-widget annotator-listing">',
-        '<li class="annotator-annotation annotator-item">',
-        '  <div class="annotator-controls">',
-        '    <a',
-        '       title="' + 'View as webpage' + '"',
-        '       class="annotator-link">' + annotation.text + '</a>',
-        '     <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
-        '     <p class="text-right">',
-        '       <i class="fa fa-pencil-square-o annotator-edit primary-color"></i>',
-        '       <i class="fa fa-times-circle annotator-delete"></i>',
-        '     </p>',
-        '  </div>',
-        '</li>',
-        '</ul>',
-        '</div>'
-      ].join('\n');
-    else
-      html = ['<div class="annotator-outer annotator-viewer annotator-hide">',
-        '<ul class="annotator-widget annotator-listing">',
-        '<li class="annotator-annotation annotator-item">',
-        '  <div class="annotator-controls">',
-        '    <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
-        '    <p class="text-right"><i class="fa fa-times-circle annotator-delete"></i></p>',
-        '  </div>',
-        '</li>',
-        '</ul>',
-        '</div>'
-      ].join('\n');
+        .toArray()
+    html = [
+      '<div class="annotator-outer annotator-viewer annotator-hide">',
+      '<ul class="annotator-widget annotator-listing">',
+      '</ul>',
+      '</div>'
+    ].join('\n')
     $('#annotator-wedget').html(html)
-    if annotation.username != @account.get('username')
-      $('.annotator-delete').remove()
+    for annotation in annotations
+      if annotation.tag == 'comment'
+        item_html = [
+          '<li class="annotator-annotation annotator-item">',
+          '  <div class="annotator-controls">',
+          '    <a',
+          '       title="' + 'View as webpage' + '"',
+          '       class="annotator-link">' + annotation.text + '</a>',
+          '     <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
+          '     <p class="text-right">',
+          '       <i class="fa fa-pencil-square-o annotator-edit primary-color"></i>',
+          '       <i class="fa fa-times-circle annotator-delete"></i>',
+          '     </p>',
+          '  </div>',
+          '</li>',        
+        ]
+        if annotation.username != @account.get('username')
+          item_html.splice(8,1)
+
+      else
+        item_html = [
+          '<li class="annotator-annotation annotator-item">',
+          '  <div class="annotator-controls">',
+          '    <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
+          '    <p class="text-right"><i class="fa fa-times-circle annotator-delete"></i></p>',
+          '  </div>',
+          '</li>',
+        ]
+        if annotation.username != @account.get('username')
+          item_html.splice(3,1)
+      $('.annotator-listing').append(item_html.join('\n'))
+
     offset = @element.parent().offset()
     position = {
       top: e.pageY - offset.top
