@@ -4,7 +4,20 @@ module Coreading
       desc 'Get all annotations'
       get do
         authenticate!
-        annotations = current_user.annotations.where(article_id: params[:article_id])
+        article = Article.find(params[:article_id])
+        annotations = []
+        if article.public == 0
+          annotations = article.annotations
+        elsif article.public == 1
+          group = Group.find(article.group_id)
+          group.users.each do |u|
+            annotations.push({
+              username: u.username, annotations: u.annotations.where(article_id: params[:article_id])
+            })
+          end
+        elsif
+          annotations = current_user.annotations.where(article_id: params[:article_id])
+        end
         #.order("created_at DESC").all
         annotations
       end

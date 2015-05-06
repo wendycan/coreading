@@ -40,10 +40,13 @@ Annotator._checkForEndSelection = function(e){
     Annotator.clickAdderBtn(annotation, position, e)});
   $('.annotator-adder i.fa-star').click(function(e){
     annotation.tag = 'star';
+    annotation.username = Annotator.options.account.username;
 
     $('#annotator-wedget').empty();
     Annotator.createAnnotation(annotation, function(data){
       annotation.id = data.id;
+      annotation.update_time = data.update_time;
+
       Highlighter.draw(annotation);
     });
   });
@@ -109,7 +112,21 @@ Annotator.load = function() {
       article_id: Annotator.options.article.id
     },
     success: function(data){
-      data.forEach(function(annotation, index) {
+      if (Annotator.options.article.public == 1) {
+        data.forEach(function(d) {
+          var anns = d.annotations;
+          var username = d.username;
+          anns.forEach(function (ann) {
+            ann.username = username;
+            Annotator.annotations.push(ann);
+          })
+        })
+      } else {
+        data.forEach(function(ann) {
+          Annotator.annotations.push(ann);
+        })
+      }
+      Annotator.annotations.forEach(function(annotation, index) {
         annotation.range = Range.sniff(JSON.parse(annotation.range));
         Highlighter.draw(annotation);
       });
@@ -125,8 +142,12 @@ Annotator._onSaveClick = function (e, annotation) {
   this.annotations.push(annotation);
   // to create annotator
   $('#annotator-wedget').empty();
+  annotation.username = Annotator.options.account.username;
+
   Annotator.createAnnotation(annotation, function(data){
     annotation.id = data.id;
+    annotation.update_time = data.update_time;
+    
     Highlighter.draw(annotation);
   });
 };
