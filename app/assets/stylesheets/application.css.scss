@@ -13,10 +13,15 @@
  *= require vendor
  *= require_self
  */
+@import "settings/variables";
 
 @import "base/utility";
+
 @import "annotator";
 
+@import "pages/home";
+
+// vendor
 @import "font-awesome-sprockets";
 @import "font-awesome";
 

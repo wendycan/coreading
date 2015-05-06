@@ -331,7 +331,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
     for annotation in annotations
       if annotation.tag == 'comment'
         item_html = [
-          '<li class="annotator-annotation annotator-item">',
+          '<li class="annotator-annotation annotator-item border-bottom">',
           '  <div class="annotator-controls">',
           '    <a',
           '       title="' + 'View as webpage' + '"',
@@ -349,7 +349,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
 
       else
         item_html = [
-          '<li class="annotator-annotation annotator-item">',
+          '<li class="annotator-annotation annotator-item border-bottom">',
           '  <div class="annotator-controls">',
           '    <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
           '    <p class="text-right"><i class="fa fa-times-circle annotator-delete"></i></p>',

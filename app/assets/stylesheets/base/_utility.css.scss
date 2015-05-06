@@ -30,6 +30,18 @@ article.alertify-log {
   margin-bottom: 10px;
 }
 
+.annotator-item.border-bottom {
+  border-bottom: solid 1px #d5d5d5;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.annotator-item.border-bottom:last-child {
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .row.border-bottom:last-child {
   border: none;
   margin-bottom: 0;
@@ -37,4 +49,10 @@ article.alertify-log {
 
 .group-edit-content li {
   list-style: none;
+}
+
+#chart-content {
+  position: fixed;
+  right: 0;
+  top: 100px;
 }
