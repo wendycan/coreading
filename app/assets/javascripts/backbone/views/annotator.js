@@ -46,7 +46,7 @@ Annotator._checkForEndSelection = function(e){
     $('#annotator-wedget').empty();
     Annotator.createAnnotation(annotation, function(data){
       annotation.id = data.id;
-      annotation.update_time = data.update_time;
+      annotation.updated_at = jQuery.timeago(data.updated_at);
 
       Highlighter.draw(annotation);
     });
@@ -120,6 +120,7 @@ Annotator.load = function() {
           Annotator.users.push(username);
           anns.forEach(function (ann) {
             ann.username = username;
+            ann.updated_at = jQuery.timeago(ann.updated_at);
             Annotator.annotations.push(ann);
           })
         })
@@ -140,7 +141,8 @@ Annotator.load = function() {
   });
 },
 Annotator.renderAnnotationsMeta = function () {
-  $('#annotations-count').text(Annotator.annotations.length).data('annotations-count', Annotator.annotations.length);
+  $('#annotations-count').text(Annotator.annotations.length);
+  $('#annotations-count').attr('data-annotations-count', Annotator.annotations.length);
   if (Annotator.options.article.public == 1) {
     $('#annotations-users').html('<p><small>批注成员</small><span class="user-list"></span></p>');
     Annotator.users.forEach(function (username) {
@@ -158,7 +160,7 @@ Annotator._onSaveClick = function (e, annotation) {
 
   Annotator.createAnnotation(annotation, function(data){
     annotation.id = data.id;
-    annotation.update_time = data.update_time;
+    annotation.updated_at = jQuery.timeago(data.updated_at);
 
     Highlighter.draw(annotation);
   });
@@ -182,6 +184,9 @@ Annotator.createAnnotation = function (annotation, success, error) {
     },
     success: function(data){
       alertify.success("成功创建此批注");
+      var count = parseInt($('#annotations-count').attr('data-annotations-count')) + 1;
+      $('#annotations-count').attr('data-annotations-count', count);
+      $('#annotations-count').text(count);
       if (success) {success(data)}
     },
     error: function(e) {
@@ -190,7 +195,7 @@ Annotator.createAnnotation = function (annotation, success, error) {
     }
   });
 };
-Annotator.deleteAnnotation = function(annotation, success) {
+Annotator.deleteAnnotation = function(annotation, success, error) {
   var user = this.options.account;
   $.ajax({
     url: '/api/v1/annotations/' + annotation.id,
@@ -200,6 +205,11 @@ Annotator.deleteAnnotation = function(annotation, success) {
     },
     success: function(data){
       alertify.success("成功删除此批注");
+      var count = parseInt($('#annotations-count').attr('data-annotations-count')) - 1;
+      if (count < 0) {count = 0};
+      $('#annotations-count').attr('data-annotations-count', count);
+      $('#annotations-count').text(count);
+
       if (success) {success(data)}
     }, 
     error: function(e) {
@@ -309,7 +319,7 @@ Annotator._onHighlightMouseover = function (e) {
       '    <a href="#"',
       '       title="' + 'View as webpage' + '"',
       '       class="annotator-link">' + annotation.text + '</a>',
-      '     <p>' + annotation.username + ' 3小时前' + '添加</p>',
+      '     <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
       '     <p class="text-right">',
       '       <i class="fa fa-pencil-square-o annotator-edit primary-color"></i>',
       '       <i class="fa fa-times-circle annotator-delete"></i>',
@@ -324,7 +334,8 @@ Annotator._onHighlightMouseover = function (e) {
       '<ul class="annotator-widget annotator-listing">',
       '<li class="annotator-annotation annotator-item">',
       '  <div class="annotator-controls">',
-      '    <i class="fa fa-times-circle annotator-delete"></i>',
+      '    <p>' + annotation.username + ' ' + annotation.updated_at + '添加</p>',
+      '    <p class="text-right"><i class="fa fa-times-circle annotator-delete"></i></p>',
       '  </div>',
       '</li>',
       '</ul>',

@@ -4,11 +4,15 @@
 //= require underscore/underscore
 //= require backbone/backbone
 //= require alertify/alertify
+//= require jquery-timeago/jquery.timeago
+//= require jquery-timeago/locales/jquery.timeago.zh-CN
+
 //= require pdfjs-dist/build/pdf
 //= require pdfjs-dist/build/pdf.worker
 //= require pdfjs-dist/build/pdf.combined
 //= require pdf_viewer
 //= require compatibility
+
 
 //= require annotator/util
 //= require annotator/xpath
