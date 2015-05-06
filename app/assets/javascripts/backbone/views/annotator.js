@@ -209,7 +209,8 @@ Annotator.deleteAnnotation = function(annotation, success, error) {
       if (count < 0) {count = 0};
       $('#annotations-count').attr('data-annotations-count', count);
       $('#annotations-count').text(count);
-
+      Highlighter.undraw(annotation);
+      
       if (success) {success(data)}
     }, 
     error: function(e) {
@@ -350,7 +351,6 @@ Annotator._onHighlightMouseover = function (e) {
       };
   Annotator.showWidget(position, $('.annotator-viewer'));
   $('#annotator-wedget .annotator-delete').click(function(){
-    Highlighter.undraw(annotation);
     $('#annotator-wedget').empty();
     Annotator.deleteAnnotation(annotation);
   });
