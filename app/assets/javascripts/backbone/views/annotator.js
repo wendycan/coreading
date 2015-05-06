@@ -344,6 +344,9 @@ Annotator._onHighlightMouseover = function (e) {
     ].join('\n');
   }
   $('#annotator-wedget').html(html);
+  if (annotation.username != Annotator.options.account.username) {
+    $('.annotator-delete').remove();
+  };
   var offset = this.element.parent().offset(),
       position = {
           top: e.pageY - offset.top,
