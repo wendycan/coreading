@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
     @group.admin_id = current_user.id
     @group.save
     Usergroup.create(:group => @group, :user => current_user)
-    respond_with(@group)
+    respond_with(@group, :location => users_group_path)
   end
 
   def update

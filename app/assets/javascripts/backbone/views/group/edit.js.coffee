@@ -40,6 +40,7 @@ class Coreading.Views.Groups.GroupEditView extends Backbone.View
     users.forEach (username)->
       $('#user-list').append _.template($('#t-user').html())(username: username)
     articles.forEach (article)->
+      console.log(article)
       $('#article-list').append _.template($('#t-article').html())(article: article)
 
   addUser: ()->

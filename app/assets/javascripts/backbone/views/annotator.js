@@ -105,6 +105,9 @@ Annotator.load = function() {
     headers: {
       'Auth-Token': user.auth_token
     },
+    data: {
+      article_id: Annotator.options.article.id
+    },
     success: function(data){
       data.forEach(function(annotation, index) {
         annotation.range = Range.sniff(JSON.parse(annotation.range));

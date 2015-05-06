@@ -28,7 +28,8 @@
 %script{type: 'text/template', id: 't-article'}
   %li.row.border-bottom{'data-article-id' => '{{= article.id }}'}
     .large-6.columns
-      %h5 {{=article.title}}
+      %h5
+        %a{:href => "/articles/{{= article.id}}"} {{=article.title}}
     .large-4.columns
       %p {{= article.created_at }}
     .large-1.columns

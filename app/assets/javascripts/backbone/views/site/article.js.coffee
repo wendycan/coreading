@@ -5,6 +5,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
 
   initialize: (opts)->
     @article = new Coreading.Models.Article(opts)
+    console.log @article
     @account = new Coreading.Models.Account
     @renderArticle()
 
