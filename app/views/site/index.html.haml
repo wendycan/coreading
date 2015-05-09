@@ -5,25 +5,18 @@
         .header-nav.show-for-small-only
           %ul
             %li.logo.text-right
-              %a{:href => "/"} 
-                %h2.white 阅台
+              %a{:href => "/"}
+                %h3.white CoReading
             %li.text-center
-              %a.white{:href => "/articles"} 博客
-            -# %li.text-center
-            -#   %a.white{:href => "#"} 系列
-            %li.text-center
-              %a.white{:href => "/presentation"} 演示文稿
+              %a.white{:href => "/articles"} 文章
         .header-nav.show-for-medium-up
           %ul
             %li.logo.text-right
               %a{:href => "/"} 
-                %h2.white 阅台
+                %h3.white CoReading
             %li.text-center
-              %a.white{:href => "/articles"} 博客
-            -# %li.text-center
-            -#   %a.white{:href => "#"} 系列
-            %li.text-center
-              %a.white{:href => "/presentation"} 演示文稿
+              %a.white{:href => "/articles"} 文章
+        %br
         %br
         %br
         .text-center
@@ -33,8 +26,8 @@
           %h3.white 记录，分享
           %span.spacer
         %br
-        %h2.white.text-center 阅台
-        %p.white.text-center 记录想法， 分享点滴
+        %h2.white.text-center CoReading
+        %p.white.text-center 协作阅读，分享经验
         %br
         .row
           .large-6.columns.large-centered.medium-10.medium-centered
@@ -46,10 +39,10 @@
   .page-2
     .row
       .large-12.columns.wrap.text-center
-        %h3 阅台为技术而作
+        %h3 CoReading 为阅读而作
         %br
         %br
-        %p 这个一个开源的分享平台，你可以在这里创建文章，包括博客，系列和演示文稿，你只需要注册一个账号。
+        %p 这是一个开源的分享平台，你可以在这里阅读文章，包括搜索，阅读和批注文章，你只需要注册一个账号。
         %a.button.entry.radius{href: '/articles'} 
           %i.fa.fa-arrow-right
           &nbsp;
@@ -62,45 +55,33 @@
         %br
         %ul.large-block-grid-3.medium-block-grid-3.small-block-grid-1
           %li.box
-            %h4.white 博客
-            %p.white 你可以创建博客，支持 markdown 和 html 两种格式的编辑。
-            = image_tag 'features-blog.png'
+            %h4.white 搜索
+            %p.white 你可以搜索你需要的文章。
+            %br
+            %br
+            = image_tag 'features-search.png'
           %li.box
-            %h4.white 系列
-            %p.white 你可以创建一个系列，例如 Jvascript 教程，系列会把零散的博客组织起来。
-            = image_tag 'features-series.png'
+            %h4.white 协作阅读
+            %p.white 你可以选择加入小组，与小组成员一起阅读。
+            %br
+            = image_tag 'features-reading.png'
           %li.box
-            %h4.white 演示文稿
-            %p.white 你可以创建演示文稿，并添加 page，保存后，可以看到 web 版的 PPT。
-            = image_tag 'features-presentation.png'
+            %h4.white 批注
+            %p.white 你可以对正在阅读的文章进行批注，如果这篇文章是小组公有的文章，那么其他成员就可以实时看到你的批注。
+            = image_tag 'features-annotation.png'
   .page-4
     .row
       .large-12.columns.wrap.text-center
-        %h3 创作人员
+        %h3 开发人员
         %br
         %br
-        %ul.large-block-grid-3.medium-block-grid-3.small-block-grid-1
+        %ul.large-block-grid-1.medium-block-grid-1.small-block-grid-1
           %li.person
             .row.collapse
               .large-4.small-3.columns
                 = image_tag 'me.png'
               .large-8.small-9.columns
-                %p Wendy,可爱萌妹。
-                %p 阅台全栈开发，并长期供稿。
-          %li.person
-            .row.collapse
-              .large-4.small-3.columns
-                = image_tag 'roman.png'
-              .large-8.small-9.columns
-                %p Roman,帅气小伙。
-                %p 阅台产品设计，并长期供稿。
-          %li.person
-            .row.collapse
-              .large-4.small-3.columns
-                = image_tag 'linda.png'
-              .large-8.small-9.columns
-                %p Linda,邻家小妹。
-                %p 阅台前端开发，并长期供稿。
+                %p Wendy。全栈开发。
   .page-5
     .row
       .large-12.columns.wrap.text-center
