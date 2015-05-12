@@ -9,6 +9,16 @@ class Api < Grape::API
   get do
     {version: '1'}
   end
+  
+  get 'user' do
+    token = params[:auth_token]
+    user = User.find_by(authentication_token: token)
+    if user
+      user
+    else
+      {errors: 'not found', status: 1}
+    end
+  end
 
   helpers do
     def current_user

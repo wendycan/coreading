@@ -7,6 +7,8 @@
 //= require jquery-timeago/jquery.timeago
 //= require jquery-timeago/locales/jquery.timeago.zh-CN
 
+//= require socket.io-client/socket.io
+
 //= require pdfjs-dist/build/pdf
 //= require pdfjs-dist/build/pdf.worker
 //= require pdfjs-dist/build/pdf.combined

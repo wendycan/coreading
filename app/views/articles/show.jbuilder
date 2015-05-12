@@ -5,3 +5,4 @@ json.path_type @article.path_type
 json.public @article.public
 json.pdf_url @article.pdf.url
 json.user_id @article.user.id
+json.group_id @article.group.id

@@ -19,6 +19,13 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
         success: (data)=>
           @renderArticle()
           @textSelector($('#pdf-viewer-container'))
+          @socket = io(Coreading.SocketPrefix + '/todos', {
+            query: $.param({
+                token: @account.get('auth_token')
+                group: @article.get('group_id')
+              }
+            )}
+          );
           if success?
             success()
         error: ->
@@ -405,3 +412,5 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       selection.addRange(drange)
 
     ranges
+  # socket
+

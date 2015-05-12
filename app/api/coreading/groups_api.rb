@@ -4,10 +4,11 @@ module Coreading
       desc 'Get all annotations'
 
       route_param :id, requirements: /[^\/]+/ do
-        # get do
-        #   annotation = current_user.annotations.find(params[:id])
-        #   JSON.parse annotation.to_json(:include => :user)
-        # end
+        get do
+          # to get group data
+          # annotation = current_user.annotations.find(params[:id])
+          # JSON.parse annotation.to_json(:include => :user)
+        end
 
         put 'add_user' do
           authenticate!

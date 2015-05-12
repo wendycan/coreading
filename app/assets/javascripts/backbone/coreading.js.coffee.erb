@@ -5,6 +5,7 @@
 #= require_tree ./views
 #= require_tree ./routers
 
+
 window.Coreading =
   Common: {}
   Models: {}
@@ -12,6 +13,8 @@ window.Coreading =
   Routers: {}
   Views: {}
   ApiPrefix: "/api/v1"
+  SocketPrefix: 'http://localhost:3003'
+
   ajax: (settings = {})->
     opts =
       crossDomain: true
