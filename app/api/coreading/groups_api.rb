@@ -5,9 +5,20 @@ module Coreading
 
       route_param :id, requirements: /[^\/]+/ do
         get do
-          # to get group data
-          # annotation = current_user.annotations.find(params[:id])
-          # JSON.parse annotation.to_json(:include => :user)
+          authenticate!
+          group = Group.find(params[:id])
+          if !group
+            error!('404 Not found', 404)
+          end
+          users = []
+          group.users.each do |u|
+            users.push u.username
+          end
+          if group.users.include?(current_user)
+            users
+          else
+            error!('401 Unauthorized', 401)
+          end
         end
 
         put 'add_user' do
