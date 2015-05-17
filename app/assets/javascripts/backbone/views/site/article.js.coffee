@@ -12,7 +12,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
     @users = []
     @fields = []
     @fetchAccount()
-
+  
   fetchAccount: (success, error)->
     if @account.get('unsync')
       @account.fetch_account(
@@ -25,13 +25,21 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
                 group: @article.get('group_id')
               }
             )}
-          );
+          )
+          @socket.on('change annotation message', (msg)=>
+            @renderAnnotation(msg)
+          )
+          window.socket = @socket
           if success?
             success()
         error: ->
           if error?
             error()
       )
+
+  renderAnnotation: (msg)->
+    data = $.parseJSON(msg)
+    @addAnnotation(data)
 
   renderArticle: ->
     article = @article.toJSON()
@@ -94,7 +102,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       annotation.tag = 'comment'
       _this.clickAdderBtn(annotation, position, e)
 
-    $('.annotator-adder i.fa-star').click (e)->
+    $('.annotator-adder i.fa-star').click (e)=>
       annotation.tag = 'star'
       annotation.username = _this.account.get('username')
 
@@ -102,6 +110,7 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       _this.createAnnotation annotation, (data)->
         annotation.id = data.id
         annotation.updated_at = jQuery.timeago(data.updated_at)
+        @socket.emit('change annotation', JSON.stringify(annotation))
 
         Highlighter.draw(annotation)
   clickAdderBtn: (annotation, position, e)->
@@ -180,6 +189,12 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       error: (e)->
         console.log(e)
 
+  addAnnotation: (annotation)->
+    annotation.range = Range.sniff annotation.range
+    # annotation.updated_at = jQuery.timeago(annotation.updated_at)
+
+    Highlighter.draw(annotation)
+
   renderAnnotationsMeta: ->
     $('#annotations-count').text @annotations.length
     $('#annotations-count').attr 'data-annotations-count', @annotations.length
@@ -196,9 +211,10 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
     $('#annotator-wedget').empty()
     annotation.username = @account.get('username')
 
-    @createAnnotation annotation, (data)->
+    @createAnnotation annotation, (data)=>
       annotation.id = data.id
       annotation.updated_at = jQuery.timeago(data.updated_at)
+      @socket.emit('change annotation', JSON.stringify(annotation))
 
       Highlighter.draw(annotation)
 
