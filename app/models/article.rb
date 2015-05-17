@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   has_many :annotations
   
   validates :title, presence: true
-  validates :pdf, presence: true
+  # validates :pdf, presence: true
   validates :path_type, presence: true
   
   mount_uploader :pdf, PdfUploader

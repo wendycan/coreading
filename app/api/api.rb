@@ -78,5 +78,6 @@ class Api < Grape::API
 
   mount Coreading::Annotation
   mount Coreading::Groups
+  mount Coreading::Articles
 
 end

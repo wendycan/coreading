@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     get 'articles'
   end
   
-  resources :articles
+  resources :articles do
+    member do
+      get 'r'
+    end
+  end
   resources :annotations
   devise_for :users
 

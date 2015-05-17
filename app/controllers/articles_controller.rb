@@ -1,8 +1,12 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.paginate(:page => params[:page])
+    @articles = Article.where(public: 0).paginate(:page => params[:page])
   end
 
+  def r
+    @r = Article.where(public: 0).find_by_id(params[:id])
+  end
+  
   def show
     @article = Article.find_by_id(params[:id])
   end

@@ -7,7 +7,7 @@
 
 %script{type: 'text/template', id: 't-article'}
   %h4 
-    %a{:href => "/articles/{{= article.id }}"}{{= article.title}}
+    %a{:href => "/articles/{{= article.id }}/r"}{{= article.title}}
   %p {{= article.body }}
 
 - articles_json = render template: "articles/index", formats: [:json], handlers: [:jbuilder]
