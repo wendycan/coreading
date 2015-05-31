@@ -1,35 +1,61 @@
-%nav.top-bar{:'data-topbar' => true}
-  %ul.title-area
-    %li.name
-      %h1
-        = link_to '/' do
-          = image_tag("logo.png")
-  %section.top-bar-section
-    %ul.right
-      %li.articles-btn
-        = link_to articles_path do
-          = "文章"
-        - if user_signed_in?
-          %li.my-articles-btn
-            = link_to '我的文章', users_articles_path
-          %li.my-groups-btn
-            = link_to '我的小组', users_group_path
-      %li.has-dropdown
-        = link_to new_user_session_path do
+.show-for-medium-up
+  %nav.top-bar{:'data-topbar' => true}
+    %ul.title-area
+      %li.name
+        %h1
+          = link_to '/' do
+            = image_tag("logo.png")
+    %section.top-bar-section
+      %ul.right
+        %li.articles-btn
+          = link_to articles_path do
+            = "文章"
           - if user_signed_in?
-            = current_user.email
-          - else
-            登录
-        %ul.dropdown
-          - if user_signed_in?
-            %li
-              = link_to '我的批注', annotations_path
-            %li
-              %a{:href => "#"} 设置
-            %li
-              = link_to '登出', destroy_user_session_path, :method => 'delete', data: { confirm: '确定登出？'}
-          - else
-            %li
-              = link_to '注册', new_user_registration_path
-            %li
-              %a{:href => "/site/random"} 关于
+            %li.my-articles-btn
+              = link_to '我的文章', users_articles_path
+            %li.my-groups-btn
+              = link_to '我的小组', users_group_path
+        %li.has-dropdown
+          = link_to new_user_session_path do
+            - if user_signed_in?
+              = current_user.email
+            - else
+              登录
+          %ul.dropdown
+            - if user_signed_in?
+              %li
+                = link_to '我的批注', annotations_path
+              %li
+                %a{:href => "#"} 设置
+              %li
+                = link_to '登出', destroy_user_session_path, :method => 'delete', data: { confirm: '确定登出？'}
+            - else
+              %li
+                = link_to '注册', new_user_registration_path
+              %li
+                %a{:href => "/site/random"} 关于
+
+%nav.tab-bar.show-for-small-only
+  %section.left-small.text-center
+    %a.left-off-canvas-toggle
+      %span
+        %i.fa.fa-bars.defaultg
+  %section.middle.tab-bar-section
+    %h1.title CoReading
+%aside.left-off-canvas-menu
+  %ul.off-canvas-list
+    %li.articles-btn
+      = link_to articles_path do
+        = "文章"
+    - if user_signed_in?
+      %li.my-articles-btn
+        = link_to '我的文章', users_articles_path
+      %li.my-groups-btn
+        = link_to '我的小组', users_group_path
+      %li
+        = link_to '我的批注', annotations_path
+      %li
+        = link_to '登出', destroy_user_session_path, :method => 'delete', data: { confirm: '确定登出？'}
+    - else
+      %li
+        = link_to '注册', new_user_registration_path

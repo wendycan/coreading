@@ -7,18 +7,21 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = render :partial => 'layouts/nav'
-    - if !notice.nil?
-      .alert-box.success{:'data-alert' => true}
-        = notice
-        %a.close{:href => "#"} &times;
-    - if !alert.nil?
-      .alert-box.alert{:'data-alert' => true}
-        = alert
-        %a.close{:href => "#"} &times;
-    .row
-      .large-12.columns
-        = yield
+    .off-canvas-wrap{:'data-offcanvas' => true}
+      .inner-wrap
+        = render :partial => 'layouts/nav'
+        - if !notice.nil?
+          .alert-box.success{:'data-alert' => true}
+            = notice
+            %a.close{:href => "#"} &times;
+        - if !alert.nil?
+          .alert-box.alert{:'data-alert' => true}
+            = alert
+            %a.close{:href => "#"} &times;
+        .row
+          .large-12.columns
+            = yield
+
   :javascript
     $(document).foundation();
   = yield(:js_ext)
