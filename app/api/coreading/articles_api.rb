@@ -9,7 +9,8 @@ module Coreading
         article.title = params[:title]
         article.body = params[:body]
         article.path_type = 'online'
-
+        article.user_id = @current_user.id
+        
         if article.save
           article
         else

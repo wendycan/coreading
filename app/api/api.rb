@@ -25,15 +25,16 @@ class Api < Grape::API
       @current_user ||= locate_user
     end
 
+    def locate_user
+      token = params['auth_token'] || headers['Auth-Token']
+      User.find_by(authentication_token: token) if token.present?
+    end
+
     def authenticate!
       error!('401 Unauthorized', 401) unless current_user
       error!('404 Not found', 404) unless current_user.editable
     end
 
-    def locate_user
-      token = params['auth_token'] || headers['Auth-Token']
-      User.find_by(authentication_token: token) if token.present?
-    end
 
     def create_annotation
       # create article

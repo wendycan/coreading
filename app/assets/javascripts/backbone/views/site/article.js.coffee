@@ -71,7 +71,6 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
 
   textSelector: (element, options)->
     @element = element
-    # @options = $.extend(true, {}, TextSelector.options, options)
     @options = options
     @element.on "mouseup", (e)=>
       @_checkForEndSelection(e)
@@ -404,29 +403,17 @@ class Coreading.Views.Articles.ArticleView extends Backbone.View
       r = selection.getRangeAt(i)
       browserRange = new Range.BrowserRange(r)
       normedRange = browserRange.normalize().limit(@element[0])
-      # If the new range falls fully outside our @element, we should
-      # add it back to the document but not return it from this method.
       if normedRange == null
         rangesToIgnore.push(r)
       else
         ranges.push(normedRange)
-
-    # BrowserRange#normalize() modifies the DOM structure and deselects the
-    # underlying text as a result. So here we remove the selected ranges and
-    # reapply the new ones.
     selection.removeAllRanges()
-
     for i in [0...rangesToIgnore.length]
       selection.addRange(rangesToIgnore[i]);
-
-    # Add normed ranges back to the selection
     for i in [0...ranges.length]
       range = ranges[i]
       drange = document.createRange()
       drange.setStartBefore(range.start)
       drange.setEndAfter(range.end)
       selection.addRange(drange)
-
     ranges
-  # socket
-
